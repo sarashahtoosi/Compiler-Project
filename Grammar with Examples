@@ -1,0 +1,114 @@
+fun_def ---> type  fun_dec compound_state
+                    // int main()  {}
+
+
+type  ---> VOID | INT | FLOAT 
+
+
+
+fun_dec ---> ID  '(' parameter_list ')' | ID '(' ')' 
+                    // plus (int a)
+                    // plus ()
+
+
+parameter_list ---> parameter_dec | parameter_list ',' parameter_dec
+                                // int a, int b, float c  
+
+
+parameter_dec ---> type  declarator 
+                                // int a
+
+
+declarator ---> ID | declarator '[' constant_expr ']' 
+                        // name
+                        // name [5]
+
+constant_expr ---> INT_CONSTANT | FLOAT_CONSTANT 
+
+
+compound_state  ---> '{' '}' | '{' state_list '}' | '{' declaration_list state_list '}' 
+                        // {}
+                        // {a=5;}
+                        // {int a; a=5;}
+
+
+
+state_list ---> statement | state_list statement 
+                        // "A list of statments or single statment."
+
+
+statement ---> compound_state  | selection_state | iteration_state | assignment_state | RETURN expr ';' " 
+                        // "Diffrent types of Statements."
+
+
+assignment_state ---> ';' |  l_expression '=' expr ';' 
+                                    // a[i+1]=5+2;
+
+// " All types of expresions in order of least to first."
+
+expr ---> and_expr | expr OR_OP and_expr
+// OR_OP: ||, 'or' 
+
+and_expr ---> equal_expr | and_expr AND_OP equal_expr
+// AND_OP: &&, 'and' 
+
+equal_expr ---> relational_expr | equal_expr EQ_OP relational_expr | equal_expr NE_OP relational_expr 
+// EQ_OP: ==
+// NE_OP: !=
+
+relational_expr ---> add_expr | relational_expr '<' add_expr | relational_expr '>' add_expr | relational_expr LE_OP add_expr | relational_expr GE_OP add_expr 
+// LE_OP: <=
+// GE_OP: >=
+
+add_expr ---> multi_expr | add_expr '+' multi_expr | add_expr '-' multi_expr
+
+multi_expr ---> unary_expr | multi_expr '*' unary_expr | multi_expr '/' unary_expr
+
+unary_expr ---> postfix_expr | unary_operator postfix_expr
+
+
+
+postfix_expr ---> primary_expr | ID '(' ')' | ID '(' expr_list ')' | l_expression INC_OP
+	
+
+
+primary_expr ---> l_expression | INT_CONSTANT | FLOAT_CONSTANT | STRING_LITERAL | '(' expr ')' 
+// INT_CONSTANT: 5
+// FLOAT_CONSTANT: 7.33
+// STRING_LITERAL: "sara"
+
+
+l_expression ---> ID | l_expression '[' expr ']' 
+                            // a 
+                            // a[5]
+                            // a[5*i]
+
+
+
+expr_list ---> expr | expr_list ',' expr
+// "A sequnce of expresions, seperated by comma."
+
+
+unary_operator ---> '-' | '!'
+// " For making a integer, negative or not a statment."
+
+
+selection_state ---> IF '(' expr ')' statement ELSE statement
+// " if stracture"
+
+
+iteration_state ---> WHILE '(' expr ')' statement | FOR '(' assignment_state expr ';' assignment_state ')' statement
+// " while and For stracture"
+	
+
+declaration_list ---> declaration | declaration_list declaration
+// "A sequnce of declarations."
+	
+
+declaration ---> type declarator_list';'
+// "A few declaration with same type."
+// int a, b[10], c, num
+
+
+declarator_list --->  declarator | declarator_list ',' declarator
+/ "A sequnce of declaration, seperated by comma."
