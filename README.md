@@ -35,7 +35,7 @@ PreProcessing:
 
 Design: Sara, Millad
 
-Code: Millad
+Code: Sara, Millad
 
 Lexical Analysis:
 
