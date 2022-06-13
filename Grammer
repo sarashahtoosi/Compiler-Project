@@ -1,0 +1,115 @@
+fun_def ---> type  fun_dec compound_state
+
+
+
+type  ---> VOID | INT | FLOAT 
+
+
+
+fun_dec ---> ID  '(' parameter_list ')' | ID '(' ')' 
+
+
+
+parameter_list ---> parameter_dec | parameter_list ',' parameter_dec
+
+
+
+parameter_dec ---> type  declarator 
+
+
+
+declarator ---> ID | declarator '[' constant_expr ']' 
+
+
+
+constant_expr ---> INT_CONSTANT | FLOAT_CONSTANT 
+
+
+
+compound_state  ---> '{' '}' | '{' state_list '}' | '{' declaration_list state_list '}' 
+-
+
+
+
+state_list ---> statement | state_list statement 
+
+
+
+statement ---> compound_state  | selection_state | iteration_state | assignment_state | RETURN expr ';' " 
+
+
+
+assignment_state ---> ';' |  l_expression '=' expr ';' 
+
+
+
+expr ---> and_expr | expr OR_OP and_expr
+
+
+
+and_expr ---> equal_expr | and_expr AND_OP equal_expr
+
+
+
+equal_expr ---> relational_expr | equal_expr EQ_OP relational_expr | equal_expr NE_OP relational_expr 
+
+
+
+relational_expr ---> add_expr | relational_expr '<' add_expr | relational_expr '>' add_expr | relational_expr LE_OP add_expr | relational_expr GE_OP add_expr 
+
+
+
+add_expr ---> multi_expr | add_expr '+' multi_expr | add_expr '-' multi_expr
+
+
+
+multi_expr ---> unary_expr | multi_expr '*' unary_expr | multi_expr '/' unary_expr
+
+
+
+unary_expr ---> postfix_expr | unary_operator postfix_expr
+	
+
+
+postfix_expr ---> primary_expr | ID '(' ')' | ID '(' expr_list ')' | l_expression INC_OP
+	
+
+
+primary_expr ---> l_expression | INT_CONSTANT | FLOAT_CONSTANT | STRING_LITERAL | '(' expr ')' 
+
+
+
+l_expression ---> ID | l_expression '[' expr ']' 
+        
+
+
+expr_list ---> expr | expr_list ',' expr
+
+
+
+unary_operator ---> '-' | '!'
+	
+
+
+selection_state ---> IF '(' expr ')' statement ELSE statement
+	
+
+
+iteration_state ---> WHILE '(' expr ')' statement | FOR '(' assignment_state expr ';' assignment_state ')' statement
+
+	
+
+declaration_list ---> declaration | declaration_list declaration
+
+	
+
+declaration ---> type declarator_list';'
+	
+
+
+declarator_list --->  declarator | declarator_list ',' declarator
+	
+
+
+
+
